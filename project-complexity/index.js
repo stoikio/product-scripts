@@ -75,7 +75,7 @@ const addComplexityDiv = () => {
 
             if (complexitySums[titleId]) {
               const divId =
-                groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
+                groupElement.getAttribute("data-testid").replace(/\s/g, "-") + "-counter";
 
               const number = Math.round(complexitySums[titleId] * 2) / 2;
 
