@@ -11,36 +11,34 @@ const addComplexityDiv = () => {
 
       if (childElement) {
         const titleElement = childElement.firstElementChild;
-        const rowsElement = Array.from(
-          childElement.querySelectorAll('div[role="row"]')
-        ).filter(
-          (element) => element.getAttribute("data-testid") !== "omnibar"
-        );
+        const rowsElement = childElement.querySelectorAll('div[role="row"]');
 
-        if (titleElement && rowsElement.length) {
-          const complexityValues = rowsElement.map((row) => {
-            const complexityCell = row.querySelector(
-              'div[data-testid*="Complexity"]'
-            );
+        if (titleElement && rowsElement) {
+          const complexityValues = Array.from(rowsElement)
+            .map((row) => {
+              const complexityCell = row.querySelector(
+                'div[data-testid*="Complexity"]'
+              );
 
-            if (
-              complexityCell &&
-              complexityCell.firstElementChild &&
-              complexityCell.firstElementChild.firstElementChild &&
-              complexityCell.firstElementChild.firstElementChild
-                .firstElementChild &&
-              complexityCell.firstElementChild.firstElementChild
-                .firstElementChild.firstElementChild &&
-              complexityCell.firstElementChild.firstElementChild
-                .firstElementChild.firstElementChild.firstElementChild
-            ) {
-              return complexityCell.firstElementChild.firstElementChild
-                .firstElementChild.firstElementChild.firstElementChild
-                .textContent;
-            }
+              if (
+                complexityCell &&
+                complexityCell.firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild.firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild.firstElementChild.firstElementChild
+              ) {
+                return complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild.firstElementChild.firstElementChild
+                  .textContent;
+              }
 
-            return null;
-          });
+              return null;
+            })
+            .filter(Boolean);
 
           const titleId = titleElement.getAttribute("data-testid");
 
@@ -65,7 +63,7 @@ const addComplexityDiv = () => {
             }
           }, 0);
 
-          if (complexitySums[titleId]) {
+          if (complexityValues.length) {
             const subChildElement = titleElement.firstElementChild;
 
             if (subChildElement) {
