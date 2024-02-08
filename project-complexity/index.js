@@ -1,3 +1,4 @@
+console.log(123);
 const addComplexityDiv = () => {
   Array.from(document.querySelectorAll('div[data-testid^="table-group-"]'))
     .filter(
