@@ -126,7 +126,7 @@ window.onload = () => {
 
   const observer = new MutationObserver(domChangedCallback);
 
-  const targetNode = document.getElementById("yourElementId");
+  const targetNode = document.getElementById("memex-project-view-root");
   const config = {
     attributes: true,
     childList: true,
