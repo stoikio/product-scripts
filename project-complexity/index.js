@@ -70,7 +70,7 @@ const addComplexityDiv = () => {
               const divId =
                 groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
 
-              const number = Math.round(complexitySums[titleId] * 2) / 2;
+              const number = Math.round((complexitySums[titleId] ?? 0) * 2) / 2;
 
               const divContent = `${number} day${number > 1 ? "s" : ""}`;
 
