@@ -97,7 +97,6 @@ window.onload = () => {
     'div[data-testid="table-scroll-container"]'
   );
 
-  console.log(1, scrollContainer);
   if (scrollContainer) {
     scrollContainer.addEventListener("scroll", addComplexityDiv);
   }
@@ -106,18 +105,3 @@ window.onload = () => {
 
   document.addEventListener("click", addComplexityDiv);
 };
-document.addEventListener("DOMContentLoaded", () => {
-  addComplexityDiv();
-
-  const scrollContainer = document.querySelector(
-    'div[data-testid="table-scroll-container"]'
-  );
-  console.log(2, scrollContainer);
-  if (scrollContainer) {
-    scrollContainer.addEventListener("scroll", addComplexityDiv);
-  }
-
-  document.addEventListener("mousemove", addComplexityDiv);
-
-  document.addEventListener("click", addComplexityDiv);
-});
