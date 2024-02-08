@@ -47,7 +47,7 @@ const addComplexityDiv = () => {
           });
 
           const titleId = titleElement.getAttribute("data-testid");
-          console.log(titleId)
+          console.log(titleId);
 
           // Calculate the sum of complexity values, converting text values to numerical representations
           complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
@@ -80,10 +80,9 @@ const addComplexityDiv = () => {
               const divId =
                 groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
 
+              const number = Math.round(complexitySums[titleId] * 2) / 2;
               // Format the complexity sum for display
-              const divContent = `${Math.round(complexitySum * 2) / 2} day${
-                complexitySum > 1 ? "s" : ""
-              }`;
+              const divContent = `${number} day${number > 1 ? "s" : ""}`;
 
               let div = document.getElementById(divId);
 
