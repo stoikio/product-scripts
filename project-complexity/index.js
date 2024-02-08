@@ -1,4 +1,3 @@
-console.log(123);
 const addComplexityDiv = () => {
   Array.from(document.querySelectorAll('div[data-testid^="table-group-"]'))
     .filter(
@@ -96,6 +95,7 @@ addComplexityDiv();
 const scrollContainer = document.querySelector(
   'div[data-testid="table-scroll-container"]'
 );
+console.log(scrollContainer)
 if (scrollContainer) {
   scrollContainer.addEventListener("scroll", addComplexityDiv);
 }
