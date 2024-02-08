@@ -108,7 +108,7 @@ const addComplexityDiv = () => {
 
 window.onload = () => {
   addComplexityDiv();
-  setInterval(addComplexityDiv, 1000);
+  setInterval(addComplexityDiv, 500);
 
   document.addEventListener("click", addComplexityDiv);
 };
