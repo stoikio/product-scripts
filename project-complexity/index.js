@@ -111,10 +111,27 @@ const addComplexityDiv = () => {
 
 // Run the addComplexityDiv function when the window loads
 window.onload = () => {
-  addComplexityDiv();
+  // addComplexityDiv();
 
-  setInterval(addComplexityDiv, 500);
+  // setInterval(addComplexityDiv, 500);
 
-  // Re-calculate and display complexity on click events
-  document.addEventListener("click", addComplexityDiv);
+  // // Re-calculate and display complexity on click events
+  // document.addEventListener("click", addComplexityDiv);
+
+  const domChangedCallback = (mutations) => {
+    forEach(mutations, () => {
+      addComplexityDiv();
+    });
+  };
+
+  const observer = new MutationObserver(domChangedCallback);
+
+  const targetNode = document.getElementById("yourElementId");
+  const config = {
+    attributes: true,
+    childList: true,
+    subtree: true,
+  };
+
+  observer.observe(targetNode, config);
 };
