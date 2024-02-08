@@ -90,16 +90,18 @@ const addComplexityDiv = () => {
     });
 };
 
-addComplexityDiv();
+document.addEventListener("DOMContentLoaded", () => {
+  addComplexityDiv();
 
-const scrollContainer = document.querySelector(
-  'div[data-testid="table-scroll-container"]'
-);
-console.log(scrollContainer)
-if (scrollContainer) {
-  scrollContainer.addEventListener("scroll", addComplexityDiv);
-}
+  const scrollContainer = document.querySelector(
+    'div[data-testid="table-scroll-container"]'
+  );
+  console.log(scrollContainer);
+  if (scrollContainer) {
+    scrollContainer.addEventListener("scroll", addComplexityDiv);
+  }
 
-document.addEventListener("mousemove", addComplexityDiv);
+  document.addEventListener("mousemove", addComplexityDiv);
 
-document.addEventListener("click", addComplexityDiv);
+  document.addEventListener("click", addComplexityDiv);
+});
