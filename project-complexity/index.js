@@ -47,6 +47,7 @@ const addComplexityDiv = () => {
           });
 
           const titleId = titleElement.getAttribute("data-testid");
+          console.log(titleId)
 
           // Calculate the sum of complexity values, converting text values to numerical representations
           complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
