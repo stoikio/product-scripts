@@ -66,20 +66,21 @@ const addComplexityDiv = () => {
             }
           }, 0);
 
-          // Construct an ID for the complexity div based on the group element's testid
-          const divId =
-            groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
-          let div = document.getElementById(divId);
-
           if (complexitySum) {
             // Get the sub child element of the title to append the complexity div
             const subChildElement = titleElement.firstElementChild;
 
             if (subChildElement) {
+              // Construct an ID for the complexity div based on the group element's testid
+              const divId =
+                groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
+
               // Format the complexity sum for display
               const divContent = `${Math.round(complexitySum * 2) / 2} day${
                 complexitySum > 1 ? "s" : ""
               }`;
+
+              let div = document.getElementById(divId);
 
               if (div) {
                 // If the div already exists, update its content
@@ -100,9 +101,6 @@ const addComplexityDiv = () => {
                 subChildElement.appendChild(div);
               }
             }
-          } else if (div) {
-            // Remove the div if the complexity sum is 0 or not applicable
-            div.remove();
           }
         }
       }
