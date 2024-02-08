@@ -14,6 +14,8 @@ const addComplexityDiv = () => {
         const rowsElement = childElement.querySelectorAll('div[role="row"]');
 
         if (titleElement && rowsElement) {
+          const titleId = titleElement.getAttribute("data-testid");
+
           const isOpened =
             titleElement.firstElementChild &&
             titleElement.firstElementChild.firstElementChild &&
@@ -24,33 +26,29 @@ const addComplexityDiv = () => {
               .endsWith("octicon-chevron-down");
 
           if (isOpened) {
-            const complexityValues = Array.from(rowsElement)
-              .map((row) => {
-                const complexityCell = row.querySelector(
-                  'div[data-testid*="Complexity"]'
-                );
+            const complexityValues = Array.from(rowsElement).map((row) => {
+              const complexityCell = row.querySelector(
+                'div[data-testid*="Complexity"]'
+              );
 
-                if (
-                  complexityCell &&
-                  complexityCell.firstElementChild &&
-                  complexityCell.firstElementChild.firstElementChild &&
-                  complexityCell.firstElementChild.firstElementChild
-                    .firstElementChild &&
-                  complexityCell.firstElementChild.firstElementChild
-                    .firstElementChild.firstElementChild &&
-                  complexityCell.firstElementChild.firstElementChild
-                    .firstElementChild.firstElementChild.firstElementChild
-                ) {
-                  return complexityCell.firstElementChild.firstElementChild
-                    .firstElementChild.firstElementChild.firstElementChild
-                    .textContent;
-                }
+              if (
+                complexityCell &&
+                complexityCell.firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild.firstElementChild &&
+                complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild.firstElementChild.firstElementChild
+              ) {
+                return complexityCell.firstElementChild.firstElementChild
+                  .firstElementChild.firstElementChild.firstElementChild
+                  .textContent;
+              }
 
-                return null;
-              })
-              .filter(Boolean);
-
-            const titleId = titleElement.getAttribute("data-testid");
+              return null;
+            });
 
             complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
               switch (cur) {
@@ -74,9 +72,9 @@ const addComplexityDiv = () => {
             }, 0);
           }
 
-          const subChildElement = titleElement.firstElementChild;
+          const subTitleElement = titleElement.firstElementChild;
 
-          if (subChildElement && complexitySums[titleId]) {
+          if (subTitleElement && complexitySums[titleId]) {
             const divId =
               groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
 
@@ -100,7 +98,7 @@ const addComplexityDiv = () => {
               div.style.borderWidth = "1px";
               div.style.paddingLeft = "8px";
               div.style.paddingRight = "8px";
-              subChildElement.appendChild(div);
+              subTitleElement.appendChild(div);
             }
           }
         }
