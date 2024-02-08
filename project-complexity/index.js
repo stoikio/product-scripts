@@ -1,3 +1,5 @@
+const complexitySums = {};
+
 // Define a function to add a complexity summary to each group of elements
 const addComplexityDiv = () => {
   // Select all divs that represent groups of items but not the footer groups
@@ -44,8 +46,10 @@ const addComplexityDiv = () => {
             return null; // Return null if no complexity value is found
           });
 
+          const titleId = titleElement.getAttribute("data-testid");
+
           // Calculate the sum of complexity values, converting text values to numerical representations
-          const complexitySum = complexityValues.reduce((acc, cur) => {
+          complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
             switch (cur) {
               case "15 mins":
                 return acc + 0.1;
@@ -66,7 +70,7 @@ const addComplexityDiv = () => {
             }
           }, 0);
 
-          if (complexitySum) {
+          if (complexitySums[titleId]) {
             // Get the sub child element of the title to append the complexity div
             const subChildElement = titleElement.firstElementChild;
 
