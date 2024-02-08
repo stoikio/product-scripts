@@ -93,8 +93,13 @@ const addComplexityDiv = () => {
 
 addComplexityDiv();
 
-document
-  .querySelector('div[data-testid="table-scroll-container"]')
-  .addEventListener("scroll", addComplexityDiv);
+const scrollContainer = document.querySelector(
+  'div[data-testid="table-scroll-container"]'
+);
+if (scrollContainer) {
+  scrollContainer.addEventListener("scroll", addComplexityDiv);
+}
+
 document.addEventListener("mousemove", addComplexityDiv);
+
 document.addEventListener("click", addComplexityDiv);
