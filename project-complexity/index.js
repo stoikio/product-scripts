@@ -63,7 +63,6 @@ const addComplexityDiv = () => {
             }
           }, 0);
 
-          
           if (complexityValues.length || complexitySums[titleId]) {
             const subChildElement = titleElement.firstElementChild;
 
