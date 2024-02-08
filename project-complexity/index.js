@@ -112,7 +112,7 @@ const addComplexityDiv = () => {
 // Run the addComplexityDiv function when the window loads
 window.onload = () => {
   addComplexityDiv();
-  setInterval(addComplexityDiv, 500);
+  setInterval(addComplexityDiv, 1000);
 
   // Re-calculate and display complexity on click events
   document.addEventListener("click", addComplexityDiv);
