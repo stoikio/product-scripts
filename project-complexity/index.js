@@ -75,7 +75,8 @@ const addComplexityDiv = () => {
 
             if (complexitySums[titleId]) {
               const divId =
-                groupElement.getAttribute("data-testid").replace(/\s/g, "-") + "-counter";
+                groupElement.getAttribute("data-testid").replace(/\s/g, "-") +
+                "-counter";
 
               const number = Math.round(complexitySums[titleId] * 2) / 2;
 
@@ -89,7 +90,6 @@ const addComplexityDiv = () => {
                 div = document.createElement("div");
                 div.id = divId;
                 div.innerHTML = divContent;
-
                 div.style.borderRadius = "999px";
                 div.style.backgroundColor = "rgb(221, 244, 255)";
                 div.style.borderColor = "rgba(84, 174, 255, 0.4)";
@@ -97,6 +97,7 @@ const addComplexityDiv = () => {
                 div.style.borderWidth = "1px";
                 div.style.paddingLeft = "8px";
                 div.style.paddingRight = "8px";
+
                 subTitleElement.appendChild(div);
               }
             }
