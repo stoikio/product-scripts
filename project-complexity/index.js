@@ -11,10 +11,14 @@ const addComplexityDiv = () => {
 
       if (childElement) {
         const titleElement = childElement.firstElementChild;
-        const rowsElement = childElement.querySelectorAll('div[role="row"]');
+        const rowsElement = Array.from(
+          childElement.querySelectorAll('div[role="row"]')
+        ).filter(
+          (element) => element.getAttribute("data-testid") !== "omnibar"
+        );
 
-        if (titleElement && rowsElement) {
-          const complexityValues = Array.from(rowsElement).map((row) => {
+        if (titleElement && rowsElement.length) {
+          const complexityValues = rowsElement.map((row) => {
             const complexityCell = row.querySelector(
               'div[data-testid*="Complexity"]'
             );
