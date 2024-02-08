@@ -1,23 +1,31 @@
+// Define a function to add a complexity summary to each group of elements
 const addComplexityDiv = () => {
+  // Select all divs that represent groups of items but not the footer groups
   Array.from(document.querySelectorAll('div[data-testid^="table-group-"]'))
     .filter(
+      // Exclude elements that are footers of the groups
       (element) =>
         !element.getAttribute("data-testid").startsWith("table-group-footer-")
     )
     .forEach((groupElement) => {
+      // Get the first child of the group element, typically containing the title and rows
       const childElement = groupElement.firstElementChild;
 
       if (childElement) {
+        // Get the title element and all row elements within the group
         const titleElement = childElement.firstElementChild;
         const rowsElement = childElement.querySelectorAll('div[role="row"]');
 
         if (titleElement && rowsElement) {
+          // Map each row to its complexity value, if it exists
           const complexityValues = Array.from(rowsElement).map((row) => {
+            // Deeply nested selection of the complexity cell within each row
             const complexityCell = row.querySelector(
               'div[data-testid*="Complexity"]'
             );
 
-            return complexityCell &&
+            if (
+              complexityCell &&
               complexityCell.firstElementChild &&
               complexityCell.firstElementChild.firstElementChild &&
               complexityCell.firstElementChild.firstElementChild
@@ -26,19 +34,24 @@ const addComplexityDiv = () => {
                 .firstElementChild.firstElementChild &&
               complexityCell.firstElementChild.firstElementChild
                 .firstElementChild.firstElementChild.firstElementChild
-              ? complexityCell.firstElementChild.firstElementChild
-                  .firstElementChild.firstElementChild.firstElementChild
-                  .textContent
-              : null;
+            ) {
+              // Return the text content of the deepest nested element, which is the complexity value
+              return complexityCell.firstElementChild.firstElementChild
+                .firstElementChild.firstElementChild.firstElementChild
+                .textContent;
+            }
+
+            return null; // Return null if no complexity value is found
           });
 
+          // Calculate the sum of complexity values, converting text values to numerical representations
           const complexitySum = complexityValues.reduce((acc, cur) => {
             switch (cur) {
               case "15 mins":
                 return acc + 0.1;
               case "1 hour":
                 return acc + 0.2;
-              case "\u{BD} day":
+              case "\u{BD} day": // Unicode character for ½
                 return acc + 0.5;
               case "1 day":
                 return acc + 1;
@@ -48,30 +61,35 @@ const addComplexityDiv = () => {
                 return acc + 5;
               case "+5 days":
                 return acc + 6;
-              default: {
-                return acc;
-              }
+              default:
+                return acc; // Default case to just return the accumulator
             }
           }, 0);
 
+          // Construct an ID for the complexity div based on the group element's testid
           const divId =
             groupElement.dataset.testid.replace(/\s/g, "-") + "-counter";
           let div = document.getElementById(divId);
 
           if (complexitySum) {
+            // Get the sub child element of the title to append the complexity div
             const subChildElement = titleElement.firstElementChild;
 
             if (subChildElement) {
+              // Format the complexity sum for display
               const divContent = `${Math.round(complexitySum * 2) / 2} day${
                 complexitySum > 1 ? "s" : ""
               }`;
 
               if (div) {
+                // If the div already exists, update its content
                 div.innerHTML = divContent;
               } else {
+                // Create a new div, style it, and append it to the subChildElement
                 div = document.createElement("div");
                 div.id = divId;
                 div.innerHTML = divContent;
+                // Apply styling to the newly created div
                 div.style.borderRadius = "999px";
                 div.style.backgroundColor = "rgb(221, 244, 255)";
                 div.style.borderColor = "rgba(84, 174, 255, 0.4)";
@@ -83,6 +101,7 @@ const addComplexityDiv = () => {
               }
             }
           } else if (div) {
+            // Remove the div if the complexity sum is 0 or not applicable
             div.remove();
           }
         }
@@ -90,9 +109,11 @@ const addComplexityDiv = () => {
     });
 };
 
+// Run the addComplexityDiv function when the window loads
 window.onload = () => {
   addComplexityDiv();
 
+  // Add an event listener to re-calculate and display complexity when scrolling in a specific container
   const scrollContainer = document.querySelector(
     'div[data-testid="table-scroll-container"]'
   );
@@ -101,7 +122,7 @@ window.onload = () => {
     scrollContainer.addEventListener("scroll", addComplexityDiv);
   }
 
+  // Re-calculate and display complexity on mouse move and click events
   document.addEventListener("mousemove", addComplexityDiv);
-
   document.addEventListener("click", addComplexityDiv);
 };
