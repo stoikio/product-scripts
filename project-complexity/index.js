@@ -113,16 +113,8 @@ const addComplexityDiv = () => {
 window.onload = () => {
   addComplexityDiv();
 
-  // Add an event listener to re-calculate and display complexity when scrolling in a specific container
-  const scrollContainer = document.querySelector(
-    'div[data-testid="table-scroll-container"]'
-  );
+  setInterval(addComplexityDiv, 500);
 
-  if (scrollContainer) {
-    scrollContainer.addEventListener("scroll", addComplexityDiv);
-  }
-
-  // Re-calculate and display complexity on mouse move and click events
-  document.addEventListener("mousemove", addComplexityDiv);
+  // Re-calculate and display complexity on click events
   document.addEventListener("click", addComplexityDiv);
 };
