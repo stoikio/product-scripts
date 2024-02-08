@@ -1,12 +1,8 @@
 const complexitySums = {};
 
 const addComplexityDiv = () => {
-  Array.from(document.querySelectorAll('div[data-testid^="table-group-"]'))
-    .filter(
-      (element) =>
-        !element.getAttribute("data-testid").startsWith("table-group-footer-")
-    )
-    .forEach((groupElement) => {
+  Array.from(document.querySelectorAll('div[role="rowgroup"]')).forEach(
+    (groupElement) => {
       const childElement = groupElement.firstElementChild;
 
       if (childElement) {
@@ -104,7 +100,8 @@ const addComplexityDiv = () => {
           }
         }
       }
-    });
+    }
+  );
 };
 
 window.onload = () => {
