@@ -110,7 +110,9 @@ const addComplexityDiv = () => {
   });
 };
 
-addComplexityDiv();
-setInterval(addComplexityDiv, 500);
+window.onload = () => {
+  addComplexityDiv();
+  setInterval(addComplexityDiv, 500);
 
-document.addEventListener("click", addComplexityDiv);
+  document.addEventListener("click", addComplexityDiv);
+};
