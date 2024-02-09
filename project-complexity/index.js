@@ -16,7 +16,9 @@ const addComplexityDiv = () => {
         const subTitleElement = titleElement.firstElementChild;
 
         if (subTitleElement) {
-          const titleId = titleElement.getAttribute("data-testid")
+          const titleId =
+            window.location.pathname +
+            titleElement.getAttribute("data-testid").replace(/\s/g, "-");
 
           const isOpened =
             subTitleElement.firstElementChild &&
@@ -72,24 +74,20 @@ const addComplexityDiv = () => {
             }, 0);
           }
 
-          if (complexitySums[titleId]) {
-            const divId = `${rowgroup
-              .getAttribute("data-testid")
-              .replace(/\s/g, "-")}-counter`;
+          let div = subTitleElement.lastElementChild;
+          const divClass = "complexity-counter";
 
+          if (typeof complexitySums[titleId] === "number") {
             const number = Math.round(complexitySums[titleId] * 2) / 2;
-
             const divContent = `${number} day${number > 1 ? "s" : ""}`;
 
-            let div = document.getElementById(divId);
-
-            if (div) {
+            if (div.class === divClass) {
               if (div.innerHTML !== divContent) {
                 div.innerHTML = divContent;
               }
             } else {
               div = document.createElement("div");
-              div.id = divId;
+              div.class = divClass;
               div.innerHTML = divContent;
               div.style.borderRadius = "999px";
               div.style.backgroundColor =
@@ -103,6 +101,8 @@ const addComplexityDiv = () => {
 
               subTitleElement.appendChild(div);
             }
+          } else if (div && div.class === divClass) {
+            div.remove();
           }
         }
       }
@@ -110,9 +110,7 @@ const addComplexityDiv = () => {
   });
 };
 
-window.onload = () => {
-  addComplexityDiv();
-  setInterval(addComplexityDiv, 500);
+addComplexityDiv();
+setInterval(addComplexityDiv, 500);
 
-  document.addEventListener("click", addComplexityDiv);
-};
+document.addEventListener("click", addComplexityDiv);
