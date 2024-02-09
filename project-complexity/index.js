@@ -1,18 +1,18 @@
 const complexitySums = {};
 
 const addComplexityDiv = () => {
-  const rowgroupElements = Array.from(
+  const rowgroups = Array.from(
     document.querySelectorAll('div[role="rowgroup"]')
   );
 
-  rowgroupElements.forEach((rowgroupElement) => {
-    const childElement = rowgroupElement.firstElementChild;
+  rowgroups.forEach((rowgroup) => {
+    const childElement = rowgroup.firstElementChild;
 
     if (childElement) {
       const titleElement = childElement.firstElementChild;
-      const rowElements = childElement.querySelectorAll('div[role="row"]');
+      const rows = Array.from(childElement.querySelectorAll('div[role="row"]'));
 
-      if (titleElement && rowElements) {
+      if (titleElement && rows) {
         const subTitleElement = titleElement.firstElementChild;
 
         if (subTitleElement) {
@@ -26,7 +26,7 @@ const addComplexityDiv = () => {
               .endsWith("octicon-chevron-down");
 
           if (isOpened) {
-            const complexityValues = Array.from(rowElements).map((row) => {
+            const complexityValues = rows.map((row) => {
               const complexityCell = row.querySelector(
                 'div[data-testid*="Complexity"]'
               );
@@ -74,7 +74,7 @@ const addComplexityDiv = () => {
 
           if (complexitySums[titleId]) {
             const divId =
-              rowgroupElement.getAttribute("data-testid").replace(/\s/g, "-") +
+              rowgroup.getAttribute("data-testid").replace(/\s/g, "-") +
               "-counter";
 
             const number = Math.round(complexitySums[titleId] * 2) / 2;
@@ -84,7 +84,9 @@ const addComplexityDiv = () => {
             let div = document.getElementById(divId);
 
             if (div) {
-              div.innerHTML = divContent;
+              if (div.innerHTML !== divContent) {
+                div.innerHTML = divContent;
+              }
             } else {
               div = document.createElement("div");
               div.id = divId;
