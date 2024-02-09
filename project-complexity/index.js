@@ -16,7 +16,9 @@ const addComplexityDiv = () => {
         const subTitleElement = titleElement.firstElementChild;
 
         if (subTitleElement) {
-          const titleId = titleElement.getAttribute("data-testid");
+          const titleId = `${
+            window.location.pathname
+          }${titleElement.getAttribute("data-testid")}`;
 
           const isOpened =
             subTitleElement.firstElementChild &&
