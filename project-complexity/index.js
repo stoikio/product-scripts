@@ -92,10 +92,9 @@ const addComplexityDiv = () => {
               div.id = divId;
               div.innerHTML = divContent;
               div.style.borderRadius = "999px";
-              div.style.backgroundColor = "rgb(221, 244, 255)";
-              div.style.borderColor = "rgba(84, 174, 255, 0.4)";
+              div.style.backgroundColor = "var(--bgColor-accent-muted,var(--color-accent-subtle,#ddf4ff))";
+              div.style.borderColor = "var(--borderColor-accent-muted,var(--color-accent-muted,rgba(84,174,255,0.4)))";
               div.style.borderStyle = "solid";
-              div.style.color = "#1F2328";
               div.style.borderWidth = "1px";
               div.style.paddingLeft = "8px";
               div.style.paddingRight = "8px";
