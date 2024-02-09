@@ -73,7 +73,7 @@ const addComplexityDiv = () => {
           }
 
           if (complexitySums[titleId]) {
-            const divId = `${window.location.pathname}-${rowgroup
+            const divId = `${rowgroup
               .getAttribute("data-testid")
               .replace(/\s/g, "-")}-counter`;
 
