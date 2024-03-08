@@ -8,111 +8,136 @@ const addComplexityDiv = () => {
   rowgroups.forEach((rowgroup) => {
     const childElement = rowgroup.firstElementChild;
 
-    if (childElement) {
-      const titleElement = childElement.firstElementChild;
-      const rows = Array.from(childElement.querySelectorAll('div[role="row"]'));
+    if (!childElement) {
+      return
+    }
 
-      if (titleElement && rows) {
-        const subTitleElement = titleElement.firstElementChild;
+    const titleElement = childElement.firstElementChild;
+    const rows = Array.from(childElement.querySelectorAll('div[role="row"]'));
 
-        if (subTitleElement) {
-          const titleId =
-            window.location.pathname +
-            titleElement.getAttribute("data-testid").replace(/\s/g, "-");
+    if (!titleElement || !rows) {
+      return
+    }
 
-          const isOpened =
-            subTitleElement.firstElementChild &&
-            subTitleElement.firstElementChild.firstElementChild &&
-            subTitleElement.firstElementChild.firstElementChild
-              .getAttribute("class")
-              .endsWith("octicon-chevron-down");
+    const subTitleElement = titleElement.firstElementChild;
+    if (!subTitleElement) {
+      return
+    }
 
-          if (isOpened) {
-            const complexityValues = rows.map((row) => {
-              const complexityCell = row.querySelector(
-                'div[data-testid*="Complexity"]'
-              );
+    const titleId =
+      window.location.pathname +
+      titleElement.getAttribute("data-testid").replace(/\s/g, "-");
 
-              if (
-                complexityCell &&
-                complexityCell.firstElementChild &&
-                complexityCell.firstElementChild.firstElementChild &&
-                complexityCell.firstElementChild.firstElementChild
-                  .firstElementChild &&
-                complexityCell.firstElementChild.firstElementChild
-                  .firstElementChild.firstElementChild &&
-                complexityCell.firstElementChild.firstElementChild
-                  .firstElementChild.firstElementChild.firstElementChild
-              ) {
-                return complexityCell.firstElementChild.firstElementChild
-                  .firstElementChild.firstElementChild.firstElementChild
-                  .textContent;
-              }
+    const isOpened =
+      subTitleElement.firstElementChild &&
+      subTitleElement.firstElementChild.firstElementChild &&
+      subTitleElement.firstElementChild.firstElementChild
+        .getAttribute("class")
+        .endsWith("octicon-chevron-down");
 
-              return null;
-            });
+    if (isOpened) {
+      const complexityValues = rows.map((row) => {
+        const complexityCell = row.querySelector(
+          'div[data-testid*="Complexity"]'
+        );
 
-            complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
-              switch (cur) {
-                case "15 mins":
-                  return acc + 0.1;
-                case "1 hour":
-                  return acc + 0.2;
-                case "\u{BD} day":
-                  return acc + 0.5;
-                case "1 day":
-                  return acc + 1;
-                case "2-3 days":
-                  return acc + 3;
-                case "4-5 days":
-                  return acc + 5;
-                case "+5 days":
-                  return acc + 6;
-                default:
-                  return acc;
-              }
-            }, 0);
-          }
-
-          let div = subTitleElement.lastElementChild;
-          const divClass = "complexity-counter";
-
-          if (typeof complexitySums[titleId] === "number") {
-            const number = Math.round(complexitySums[titleId] * 2) / 2;
-            const divContent = `${number} day${number > 1 ? "s" : ""}`;
-
-            if (div.class === divClass) {
-              if (div.innerHTML !== divContent) {
-                div.innerHTML = divContent;
-              }
-            } else {
-              div = document.createElement("div");
-              div.class = divClass;
-              div.innerHTML = divContent;
-              div.style.borderRadius = "999px";
-              div.style.backgroundColor =
-                "var(--bgColor-accent-muted,var(--color-accent-subtle,#ddf4ff))";
-              div.style.borderColor =
-                "var(--borderColor-accent-muted,var(--color-accent-muted,rgba(84,174,255,0.4)))";
-              div.style.borderStyle = "solid";
-              div.style.borderWidth = "1px";
-              div.style.paddingLeft = "8px";
-              div.style.paddingRight = "8px";
-
-              subTitleElement.appendChild(div);
-            }
-          } else if (div && div.class === divClass) {
-            div.remove();
-          }
+        if (
+          complexityCell &&
+          complexityCell.firstElementChild &&
+          complexityCell.firstElementChild.firstElementChild &&
+          complexityCell.firstElementChild.firstElementChild
+            .firstElementChild &&
+          complexityCell.firstElementChild.firstElementChild
+            .firstElementChild.firstElementChild &&
+          complexityCell.firstElementChild.firstElementChild
+            .firstElementChild.firstElementChild.firstElementChild
+        ) {
+          return complexityCell.firstElementChild.firstElementChild
+            .firstElementChild.firstElementChild.firstElementChild
+            .textContent;
         }
+
+        return null;
+      });
+
+      complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
+        switch (cur) {
+          case "15 mins":
+            return acc + 0.1;
+          case "1 hour":
+            return acc + 0.2;
+          case "\u{BD} day":
+            return acc + 0.5;
+          case "1 day":
+            return acc + 1;
+          case "2-3 days":
+            return acc + 3;
+          case "4-5 days":
+            return acc + 5;
+          case "+5 days":
+            return acc + 6;
+          default:
+            return acc;
+        }
+      }, 0);
+    }
+
+    let div = subTitleElement.lastElementChild;
+    const divClass = "complexity-counter";
+
+    if (typeof complexitySums[titleId] === "number") {
+      const number = Math.round(complexitySums[titleId] * 2) / 2;
+      const divContent = `${number} day${number > 1 ? "s" : ""}`;
+
+      if (div.class === divClass) {
+        if (div.innerHTML !== divContent) {
+          div.innerHTML = divContent;
+        }
+      } else {
+        div = document.createElement("div");
+        div.class = divClass;
+        div.innerHTML = divContent;
+        div.style.borderRadius = "999px";
+        div.style.backgroundColor =
+          "var(--bgColor-accent-muted,var(--color-accent-subtle,#ddf4ff))";
+        div.style.borderColor =
+          "var(--borderColor-accent-muted,var(--color-accent-muted,rgba(84,174,255,0.4)))";
+        div.style.borderStyle = "solid";
+        div.style.borderWidth = "1px";
+        div.style.paddingLeft = "8px";
+        div.style.paddingRight = "8px";
+
+        subTitleElement.appendChild(div);
       }
+    } else if (div && div.class === divClass) {
+      div.remove();
     }
   });
 };
 
-window.onload = () => {
-  addComplexityDiv();
-  setInterval(addComplexityDiv, 500);
+const debounce = (callback, wait) => {
+  let timeoutId = null;
 
-  document.addEventListener("click", addComplexityDiv);
-};
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
+}
+
+window.addEventListener("load", () => {
+  const root = document.getElementById("memex-project-view-root");
+  if (!root) {
+    console.warn("Could not find root element (#memex-project-view-root)");
+    return;
+  }
+
+  const handleMutation = debounce(() => {
+    addComplexityDiv();
+  }, 10);
+
+  handleMutation();
+  const observer = new MutationObserver(handleMutation);
+  observer.observe(root, { attributes: false, childList: true, subtree: true });
+})
