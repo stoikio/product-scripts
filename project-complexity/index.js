@@ -71,11 +71,11 @@ const addComplexityDiv = () => {
           case "1 day":
             return acc + 1;
           case "2-3 days":
-            return acc + 3;
+            return acc + 2.5;
           case "4-5 days":
-            return acc + 5;
+            return acc + 4.5;
           case "+5 days":
-            return acc + 6;
+            return acc + 5.5;
           default:
             return acc;
         }
