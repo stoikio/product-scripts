@@ -9,24 +9,51 @@ const addComplexityDiv = () => {
     const childElement = rowgroup.firstElementChild;
 
     if (!childElement) {
-      return
+      return;
     }
 
     const titleElement = childElement.firstElementChild;
     const rows = Array.from(childElement.querySelectorAll('div[role="row"]'));
 
-    if (!titleElement || !rows) {
-      return
+    const columnHeaders = document.querySelectorAll('[role="columnheader"]');
+
+    let complexityIndex = -1;
+
+    columnHeaders.forEach((header, index) => {
+      if (
+        header.firstElementChild &&
+        header.firstElementChild.firstElementChild &&
+        header.firstElementChild.firstElementChild.textContent === "Complexity"
+      ) {
+        complexityIndex = index + 1;
+      }
+    });
+
+    if (!titleElement || !rows || complexityIndex === -1) {
+      return;
     }
 
     const subTitleElement = titleElement.firstElementChild;
+
     if (!subTitleElement) {
-      return
+      return;
     }
 
-    const titleId =
-      window.location.pathname +
-      titleElement.getAttribute("data-testid").replace(/\s/g, "-");
+    const titleSpan = subTitleElement.querySelector(
+      'span[class*="prc-Text-Text"]'
+    );
+
+    if (!titleSpan) {
+      return;
+    }
+
+    const titleText = titleSpan.textContent;
+
+    if (!titleText) {
+      return;
+    }
+
+    const titleId = window.location.pathname + titleText.replace(/\s/g, "-");
 
     const isOpened =
       subTitleElement.firstElementChild &&
@@ -37,9 +64,9 @@ const addComplexityDiv = () => {
 
     if (isOpened) {
       const complexityValues = rows.map((row) => {
-        const complexityCell = row.querySelector(
-          'div[data-testid*="Complexity"]'
-        );
+        const cells = Array.from(row.querySelectorAll('div[role="gridcell"]'));
+
+        const complexityCell = cells[complexityIndex];
 
         if (
           complexityCell &&
@@ -47,14 +74,13 @@ const addComplexityDiv = () => {
           complexityCell.firstElementChild.firstElementChild &&
           complexityCell.firstElementChild.firstElementChild
             .firstElementChild &&
-          complexityCell.firstElementChild.firstElementChild
-            .firstElementChild.firstElementChild &&
-          complexityCell.firstElementChild.firstElementChild
-            .firstElementChild.firstElementChild.firstElementChild
+          complexityCell.firstElementChild.firstElementChild.firstElementChild
+            .firstElementChild &&
+          complexityCell.firstElementChild.firstElementChild.firstElementChild
+            .firstElementChild.firstElementChild
         ) {
           return complexityCell.firstElementChild.firstElementChild
-            .firstElementChild.firstElementChild.firstElementChild
-            .textContent;
+            .firstElementChild.firstElementChild.firstElementChild.textContent;
         }
 
         return null;
@@ -124,7 +150,7 @@ const debounce = (callback, wait) => {
       callback(...args);
     }, wait);
   };
-}
+};
 
 window.addEventListener("load", () => {
   const root = document.getElementById("memex-project-view-root");
@@ -140,4 +166,4 @@ window.addEventListener("load", () => {
   handleMutation();
   const observer = new MutationObserver(handleMutation);
   observer.observe(root, { attributes: false, childList: true, subtree: true });
-})
+});
