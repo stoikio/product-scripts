@@ -132,6 +132,7 @@ const addComplexityDiv = () => {
         div.style.borderWidth = "1px";
         div.style.paddingLeft = "8px";
         div.style.paddingRight = "8px";
+        div.style.marginLeft = "-4px";
 
         subTitleElement.appendChild(div);
       }
@@ -154,6 +155,7 @@ const debounce = (callback, wait) => {
 
 window.addEventListener("load", () => {
   const root = document.getElementById("memex-project-view-root");
+
   if (!root) {
     console.warn("Could not find root element (#memex-project-view-root)");
     return;
