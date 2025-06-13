@@ -88,8 +88,6 @@ const addComplexityDiv = () => {
 
       complexitySums[titleId] = complexityValues.reduce((acc, cur) => {
         switch (cur) {
-          case "15 mins":
-            return acc + 0.1;
           case "1 hour":
             return acc + 0.2;
           case "\u{BD} day":
